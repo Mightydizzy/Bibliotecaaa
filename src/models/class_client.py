@@ -15,7 +15,20 @@ class client:
         
         if not re.match(email_regex, self.email):
             raise ValueError("El email no tiene un formato válido. Ejemplo válido: usuario@dominio.com.")
-        return True
+        connection = conectar_db()
+        if not connection: 
+            raise ConnectionError("No se pudo conectar a la base de datos para validar el email.")
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT COUNT(*) FROM usuarios WHERE email = %s", (self.email,))
+                resultado = cursor.fetchone()
+                if resultado[0] > 0:
+                    raise ValueError(f"El email '{self.email}' ya está registrado.")
+        except Exception as e:
+            raise ValueError(f"Error al verificar el email: {e}")
+        finally: 
+            if connection:
+                connection.close()
     
     def validate_password (self):
         if len(self.password) < 7:
