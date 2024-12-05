@@ -67,6 +67,16 @@ def main():
                 usuario_actual = auth_service.authenticate_client(email, password)
 
                 if usuario_actual:
+                    print_separator()
+                    print(f"""   *  .  . *       *    .        .        .   *    ..
+ .    *        .   ###     .      .        .            *
+    *.   *        #####   .     *      *        *    .
+  ____       *  ######### *    .  *      .        .  *   .
+ /   /\  .     ###\#|#/###   ..    *    .      *  .  ..  *
+/___/  ^8/      ###\|/###  *    *            .      *   *
+|   ||%%(        # )|(  #
+|___|,  \\          )|(""")
+                    print_separator()
                     print(f"Bienvenido, {usuario_actual['nombre']}!")
                 else:
                     print("Error en la autenticación. Verifica tus credenciales.")
