@@ -19,14 +19,7 @@ def conectar_db():
             connection = None
     return connection
 
-
-def cerrar_conexion():
-    #Cierra la conexión a la base de datos al apagar el programa."""
-    global connection
-    if connection:
-        connection.close()
-        print("Conexión a la base de datos cerrada.")
-
+conectar_db()
 
 #se ha comentado esta parte del código ya que las tablas ya se encuentran creadas, pero se conservan en caso de que haya algún error
 """
@@ -72,4 +65,3 @@ def crear_tablas():
         print(f"Error al crear tablas: {e}")
         """
 
-atexit.register(cerrar_conexion)
