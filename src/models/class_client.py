@@ -1,4 +1,3 @@
-from src.db_connection import conectar_db
 from src.utils.hashing import hash_password
 import re
 class Client:
