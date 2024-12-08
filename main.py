@@ -1,9 +1,9 @@
-
+from src.services.apilibro import APILibro
 from src.models.class_client import Client
 from src.models.client_repository import ClientRepository
 from src.models.validator import validator
 from src.client.auth_service import AuthService
-
+api_libro = APILibro()
 
 def print_separator():
     """Imprime una línea separadora para mejorar la legibilidad del menú."""
@@ -28,10 +28,9 @@ def main():
         if usuario_actual:
             print("\nOpciones:")
             print("1. Visualizar todos los libros")
-            print("2. Buscar libros por autor")
-            print("3. Buscar libros por ISBN")
-            print("4. Realizar un préstamo")
-            print("5. Cerrar sesión")
+            print("2. Buscar libros por ISBN")
+            print("3. Realizar un préstamo")
+            print("4. Cerrar sesión")
         else:
             print("\nOpciones:")
             print("1. Registrar un nuevo usuario")
@@ -68,7 +67,7 @@ def main():
 
                 if usuario_actual:
                     print_separator()
-                    print(f"""   *  .  . *       *    .        .        .   *    ..
+                    print(r"""   *  .  . *       *    .        .        .   *    ..
  .    *        .   ###     .      .        .            *
     *.   *        #####   .     *      *        *    .
   ____       *  ######### *    .  *      .        .  *   .
@@ -86,26 +85,43 @@ def main():
        
         elif usuario_actual and opcion == "1": 
             #TODO mostrar todos los libros
-            print("la visualización de todos los libros está en desarrollo. Por favor, intente más tarde.")
+            print("\nMostrando todos los libros disponibles...")
+            libros = api_libro.obtener_libros_sin_repetir()
+            if libros:
+                for libro in libros:
+                    print(f"ISBN: {libro['isbn']}, Título: {libro['titulo']}, Autor: {libro['autor']}")
+            else:
+                print("\nNo se encontraron libros disponibles.")
         
         elif usuario_actual and opcion == "2":
-            #TODO Buscar libros por autor (en desarrollo)
-            print("La búsqueda de libros por autor está en desarrollo. Por favor, intente más tarde.")
-        
-        elif usuario_actual and opcion == "3":
-            #TODO Buscar libros por ISBN (en desarrollo)
-            print("La búsqueda de libros por ISBN está en desarrollo. Por favor, intente más tarde.")
+            isbn = input("Ingrese el ISBN del libro: ").strip()
+            print(f"Buscando libro con ISBN {isbn}...")
+            libro = api_libro.obtener_y_guardar_libro_por_isbn(isbn)
+    
+            if libro:
+                print("\n--- Detalles del Libro ---")
+                # Usa los atributos de la instancia de `Libro`
+                print(f"ISBN: {libro.isbn}")
+                print(f"Título: {libro.titulo}")
+                print(f"Autor: {libro.autor}")
+                print(f"Descripción: {libro.descripcion}")
+                print(f"Categorías: {libro.categorias}")
+                print(f"Número de Páginas: {libro.numero_paginas}")
+                print(f"Disponibilidad: {'Sí' if libro.disponibilidad else 'No'}")
+            else:
+                print("\nEl libro no fue encontrado en la API ni en la base de datos.")
 
-        elif usuario_actual and opcion == "4":
+
+        elif usuario_actual and opcion == "3":
             #TODO Realizar préstamo (en desarrollo)
             print("La funcionalidad de realizar préstamos está en desarrollo. Por favor, intente más tarde.")
 
-        elif usuario_actual and opcion == "5":
+        elif usuario_actual and opcion == "4":
             # Cerrar sesión
             print(f"Hasta luego, {usuario_actual['nombre']}!")
             usuario_actual = None
 
-        elif opcion == "3" and not usuario_actual or opcion == "5" and usuario_actual:
+        elif opcion == "3" and not usuario_actual or opcion == "4" and usuario_actual:
             # Salir del sistema
             print("Saliendo del sistema...")
             break
