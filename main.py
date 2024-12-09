@@ -1,9 +1,14 @@
 from src.services.apilibro import APILibro
 from src.models.class_client import Client
-from src.models.client_repository import ClientRepository
+from src.repo.client_repository import ClientRepository
 from src.models.validator import validator
 from src.client.auth_service import AuthService
+from src.services.prestamo_service import PrestamoService
+from src.models.db_libro import DBLibro
+from src.models.libro import Libro
+import getpass
 api_libro = APILibro()
+db_libro = DBLibro()
 
 def print_separator():
     """Imprime una línea separadora para mejorar la legibilidad del menú."""
@@ -44,7 +49,7 @@ def main():
             try:
                 nombre = input("Ingresa tu nombre: ").strip()
                 email = input("Ingresa tu email: ").strip()
-                password = input("Ingresa tu contraseña con al menos 7 caracteres, una mayúscula y un número: ").strip()
+                password = getpass.getpass("Ingresa tu contraseña con al menos 7 caracteres, una mayúscula y un número: ").strip()
 
                 validator.validar_email(email)
                 validator.validar_password(password)
@@ -60,7 +65,7 @@ def main():
         elif opcion == "2" and not usuario_actual:
             try:
                 email = input("Ingresa tu email: ").strip()
-                password = input("Ingresa tu contraseña: ").strip()
+                password = getpass.getpass("Ingresa tu contraseña: ").strip()
 
                 auth_service = AuthService()
                 usuario_actual = auth_service.authenticate_client(email, password)
@@ -113,12 +118,13 @@ def main():
 
 
         elif usuario_actual and opcion == "3":
-            #TODO Realizar préstamo (en desarrollo)
-            print("La funcionalidad de realizar préstamos está en desarrollo. Por favor, intente más tarde.")
+            isbn = input("Ingrese el ISBN del libro que desea prestar: ").strip()
+            PrestamoService.consultar_y_realizar_prestamo(usuario_actual, isbn)
+
 
         elif usuario_actual and opcion == "4":
             # Cerrar sesión
-            print(f"Hasta luego, {usuario_actual['nombre']}!")
+            print(f"Hasta luego, {usuario_actual.nombre}!")
             usuario_actual = None
 
         elif opcion == "3" and not usuario_actual or opcion == "4" and usuario_actual:

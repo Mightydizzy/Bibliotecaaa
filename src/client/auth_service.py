@@ -1,5 +1,6 @@
 from src.models.connection import Connection
 from src.utils.hashing import verify_pw
+from src.models.class_client import Client
 
 class AuthService:
     def authenticate_client(self, email: str, password: str) -> dict:
@@ -16,11 +17,7 @@ class AuthService:
                     id_cliente, nombre, email, password_hash = resultado
                     if verify_pw(password, password_hash):
                         print("Autenticación exitosa.")
-                        return {
-                            "id": id_cliente,
-                            "nombre": nombre,
-                            "email": email
-                        }
+                        return Client(id_cliente=id_cliente, nombre=nombre, email=email)
                     else:
                         print("Contraseña incorrecta.")
                 else:
