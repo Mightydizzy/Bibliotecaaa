@@ -1,5 +1,6 @@
 from src.models.connection import Connection
 from src.models.libro import Libro
+from src.services.error_log import ErrorLogger 
 
 class DBLibro:
 
@@ -36,6 +37,7 @@ class DBLibro:
                 ))
         
         except Exception as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             print(f"Error al guardar el libro: {e}")
 
     @staticmethod

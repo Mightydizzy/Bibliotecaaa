@@ -1,6 +1,7 @@
 from src.models.connection import Connection
 from src.utils.hashing import verify_pw
 from src.models.class_client import Client
+from src.services.error_log import ErrorLogger 
 
 class AuthService:
     def authenticate_client(self, email: str, password: str) -> dict:
@@ -23,6 +24,7 @@ class AuthService:
                 else:
                     print("Cliente no encontrado.")
         except Exception as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             print(f"Error al autenticar cliente: {e}")
         
         return None

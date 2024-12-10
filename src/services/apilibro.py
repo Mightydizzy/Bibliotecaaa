@@ -1,7 +1,7 @@
 from src.models.libro import Libro
 from src.services.api_client import APIClient
 from src.models.db_libro import DBLibro
-
+from src.services.error_log import ErrorLogger 
 class APILibro:
 
     def __init__(self):
@@ -56,6 +56,7 @@ class APILibro:
 
             return libro
         except Exception as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             print(f"Error al obtener libro por ISBN: {e}")
         return None
  

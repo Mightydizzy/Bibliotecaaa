@@ -1,5 +1,6 @@
 import requests
-from src.services.api_config import API_BASE_URL
+from src.utils.api_config import API_BASE_URL
+from src.services.error_log import ErrorLogger 
 
 class APIClient:
     """Clase para manejar la interacción con la API."""
@@ -15,4 +16,5 @@ class APIClient:
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             raise ValueError(f"Error al conectar con la API: {e}")

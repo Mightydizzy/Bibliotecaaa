@@ -1,6 +1,7 @@
 import re
 from src.models.connection import Connection
 from src.models.class_client import Client
+from src.services.error_log import ErrorLogger 
 
 class validator:
 
@@ -20,6 +21,7 @@ class validator:
             if cursor.fetchone()[0] > 0:
                 raise ValueError(f"El email '{email}' ya está registrado.")
         except Exception as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             raise ValueError(f"Error al verificar el email: {e}")
         return True
 

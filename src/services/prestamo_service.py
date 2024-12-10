@@ -2,6 +2,7 @@ import datetime
 from src.models.connection import Connection
 from src.services.apilibro import APILibro
 from src.models.class_client import Client
+from src.services.error_log import ErrorLogger 
 
 class PrestamoService:
     def consultar_y_realizar_prestamo(cliente: Client, isbn: str):
@@ -51,4 +52,5 @@ class PrestamoService:
 
             print(f"\nEl préstamo del libro '{libro.titulo}' ha sido registrado exitosamente para el usuario {cliente.nombre} ({cliente.email}).")
         except Exception as e:
+            ErrorLogger.log_error(str(e), module="ModuloPrueba")
             print(f"Error al realizar el préstamo: {e}")
