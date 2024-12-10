@@ -35,7 +35,10 @@ def main():
             print("1. Visualizar todos los libros")
             print("2. Buscar libros por ISBN")
             print("3. Realizar un préstamo")
-            print("4. Cerrar sesión")
+            print("4. crear libro")
+            print("5. editar libro")
+            print("6. eliminar libro")
+            print("7. Cerrar sesión")
         else:
             print("\nOpciones:")
             print("1. Registrar un nuevo usuario")
@@ -123,11 +126,42 @@ def main():
 
 
         elif usuario_actual and opcion == "4":
-            # Cerrar sesión
-            print(f"Hasta luego, {usuario_actual.nombre}!")
-            usuario_actual = None
+            # Crear un nuevo libro
+            print("\nCrear un nuevo libro:")
+            isbn = input("ISBN: ").strip()
+            titulo = input("Título: ").strip()
+            autor = input("Autor: ").strip()
+            descripcion = input("Descripción: ").strip()
+            categorias = input("Categorías: ").strip()
+            numero_paginas = input("Número de páginas: ").strip()
+            disponibilidad = input("Disponibilidad (1 para disponible, 0 para no disponible): ").strip()
 
-        elif opcion == "3" and not usuario_actual or opcion == "4" and usuario_actual:
+            db_libro.crear_libro(isbn, titulo, autor, descripcion, categorias, numero_paginas, disponibilidad)
+
+
+        elif usuario_actual and opcion == "5":
+            # Editar un libro
+            isbn = input("Ingrese el ISBN del libro a editar: ").strip()
+            libro = db_libro.buscar_libro_por_isbn(isbn)
+
+            if libro:
+                print("\nIngrese los nuevos detalles del libro (deje vacío para no cambiar):")
+                nuevo_isbn = input(f"Nuevo ISBN ({libro[0]}): ").strip() or libro[0]
+                nuevo_titulo = input(f"Nuevo Título ({libro[1]}): ").strip() or libro[1]
+                nuevo_autor = input(f"Nuevo Autor ({libro[2]}): ").strip() or libro[2]
+                nueva_descripcion = input(f"Nuevo Descripción ({libro[3]}): ").strip() or libro[3]
+                nuevas_categorias = input(f"Nuevas Categorías ({libro[4]}): ").strip() or libro[4]
+                nuevo_numero_paginas = input(f"Nuevo Número de Páginas ({libro[5]}): ").strip() or libro[5]
+                nueva_disponibilidad = input(f"Nueva Disponibilidad ({'Sí' if libro[6] else 'No'}): ").strip() or libro[6]
+
+                db_libro.editar_libro(libro[0], nuevo_isbn, nuevo_titulo, nuevo_autor, nueva_descripcion, nuevas_categorias, nuevo_numero_paginas, nueva_disponibilidad)
+
+        elif usuario_actual and opcion == "6":
+            # Eliminar un libro
+            isbn = input("Ingrese el ISBN del libro a eliminar: ").strip()
+            db_libro.eliminar_libro(isbn)
+
+        elif opcion == "3" and not usuario_actual or opcion == "7" and usuario_actual:
             # Salir del sistema
             print("Saliendo del sistema...")
             break

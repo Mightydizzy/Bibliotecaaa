@@ -1,7 +1,7 @@
 import pymysql
 
 class Connection:
-    def __init__(self, host='localhost', port=3306, user='root', password='', database='Biblioteca'):
+    def __init__(self, host='localhost', port=3306, user='root', password='', database='biblioteca'):
         self.host = host
         self.port = port
         self.user = user

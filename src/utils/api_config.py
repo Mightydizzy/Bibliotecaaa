@@ -1,1 +1,1 @@
-API_BASE_URL = "https://poo.nsidea"
+API_BASE_URL = "https://poo.nsideas.cl/api"
