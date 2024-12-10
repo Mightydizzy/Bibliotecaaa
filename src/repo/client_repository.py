@@ -20,9 +20,9 @@ class ClientRepository:
             return True
 
         except ValueError as ve:
-            ErrorLogger.log_error(str(ve), module="ModuloPrueba")
+            ErrorLogger.log_error(str(ve), module="client repo")
             print(f"Error de validación: {ve}")
         except Exception as e:
             print(f"Error inesperado al registrar usuario: {str(e)}")
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="client repo")
         return False

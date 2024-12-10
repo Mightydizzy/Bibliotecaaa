@@ -16,5 +16,5 @@ class APIClient:
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="Api client")
             raise ValueError(f"Error al conectar con la API: {e}")

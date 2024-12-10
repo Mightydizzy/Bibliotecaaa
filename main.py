@@ -4,7 +4,7 @@ from src.repo.client_repository import ClientRepository
 from src.models.validator import validator
 from src.client.auth_service import AuthService
 from src.services.prestamo_service import PrestamoService
-from src.models.db_libro import DBLibro
+from src.services.db_libro import DBLibro
 from src.models.libro import Libro
 import getpass
 api_libro = APILibro()
@@ -34,11 +34,13 @@ def main():
             print("\nOpciones:")
             print("1. Visualizar todos los libros")
             print("2. Buscar libros por ISBN")
-            print("3. Realizar un préstamo")
-            print("4. crear libro")
-            print("5. editar libro")
-            print("6. eliminar libro")
-            print("7. Cerrar sesión")
+            print("3. Solicitar un préstamo")
+            print("4. Consultar préstamo")
+            print("5. Devolver préstamo")
+            print("6. Agregar libro")
+            print("7. Editar libro")
+            print("8. Eliminar libro")
+            print("9. Cerrar sesión")
         else:
             print("\nOpciones:")
             print("1. Registrar un nuevo usuario")
@@ -121,11 +123,21 @@ def main():
 
 
         elif usuario_actual and opcion == "3":
-            isbn = input("Ingrese el ISBN del libro que desea prestar: ").strip()
+            isbn = input("Ingrese el ISBN del libro que desea solicitar: ").strip()
             PrestamoService.consultar_y_realizar_prestamo(usuario_actual, isbn)
 
-
         elif usuario_actual and opcion == "4":
+            PrestamoService.listar_prestamos_usuario(usuario_actual.id_cliente)
+
+        elif usuario_actual and opcion == "5":
+            try:
+                prestamo_id = int(input("Ingrese el ID del préstamo que desea devolver: ").strip())
+                PrestamoService.devolver_prestamo(prestamo_id)
+            except ValueError:
+                print("ID de préstamo inválido. Debe ser un número.")
+
+
+        elif usuario_actual and opcion == "6":
             # Crear un nuevo libro
             print("\nCrear un nuevo libro:")
             isbn = input("ISBN: ").strip()
@@ -139,7 +151,7 @@ def main():
             db_libro.crear_libro(isbn, titulo, autor, descripcion, categorias, numero_paginas, disponibilidad)
 
 
-        elif usuario_actual and opcion == "5":
+        elif usuario_actual and opcion == "7":
             # Editar un libro
             isbn = input("Ingrese el ISBN del libro a editar: ").strip()
             libro = db_libro.buscar_libro_por_isbn(isbn)
@@ -156,12 +168,12 @@ def main():
 
                 db_libro.editar_libro(libro[0], nuevo_isbn, nuevo_titulo, nuevo_autor, nueva_descripcion, nuevas_categorias, nuevo_numero_paginas, nueva_disponibilidad)
 
-        elif usuario_actual and opcion == "6":
+        elif usuario_actual and opcion == "8":
             # Eliminar un libro
             isbn = input("Ingrese el ISBN del libro a eliminar: ").strip()
             db_libro.eliminar_libro(isbn)
 
-        elif opcion == "3" and not usuario_actual or opcion == "7" and usuario_actual:
+        elif opcion == "3" and not usuario_actual or opcion == "9" and usuario_actual:
             # Salir del sistema
             print("Saliendo del sistema...")
             break

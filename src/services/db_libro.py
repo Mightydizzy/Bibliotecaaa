@@ -37,7 +37,7 @@ class DBLibro:
                 ))
         
         except Exception as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="Módulo Guardar Libro")
             print(f"Error al guardar el libro: {e}")
 
     @staticmethod
@@ -58,7 +58,7 @@ class DBLibro:
                 db.execute_query(query, (isbn, titulo, autor, descripcion, categorias, numero_paginas, disponibilidad))
             print("Libro agregado correctamente.")
         except Exception as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="Módulo crear libro")
             print(f"Error al crear el libro: {e}")
 
     @staticmethod
@@ -103,7 +103,7 @@ class DBLibro:
                 db.execute_query(query, tuple(values))  # No es necesario el commit explícito
             print("Libro actualizado correctamente.")
         except Exception as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="Módulo Editar Libro")
             print(f"Error al editar el libro: {e}")
 
 

@@ -21,7 +21,7 @@ class Libro:
             disponibilidad=True  # Por defecto, disponible al deserializar
         )
     def to_dict(self):
-        """Convierte la instancia a un diccionario."""
+        # Convierte la instancia a un diccionario.
         return {
             "isbn": self.isbn,
             "titulo": self.titulo,

@@ -7,11 +7,8 @@ class AuthService:
     def authenticate_client(self, email: str, password: str) -> dict:
         try:
             with Connection() as connection:
-                cursor = connection.execute_query("""
-                    SELECT id, nombre, email, password_hash
-                    FROM usuarios
-                    WHERE email = %s
-                """, (email,))
+                cursor = connection.execute_query("""SELECT id, nombre, email, password_hash
+                    FROM usuarios WHERE email = %s """, (email,))
                 
                 resultado = cursor.fetchone()
                 if resultado:
@@ -24,7 +21,7 @@ class AuthService:
                 else:
                     print("Cliente no encontrado.")
         except Exception as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="Auth Service")
             print(f"Error al autenticar cliente: {e}")
         
         return None

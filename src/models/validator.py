@@ -21,7 +21,7 @@ class validator:
             if cursor.fetchone()[0] > 0:
                 raise ValueError(f"El email '{email}' ya está registrado.")
         except Exception as e:
-            ErrorLogger.log_error(str(e), module="ModuloPrueba")
+            ErrorLogger.log_error(str(e), module="validator")
             raise ValueError(f"Error al verificar el email: {e}")
         return True
 
