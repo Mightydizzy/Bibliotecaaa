@@ -87,12 +87,18 @@ def main():
 |   ||%%(        # )|(  #
 |___|,  \\          )|(""")
                     print_separator()
+                    if isinstance(usuario_actual, dict):
+                        nombre = usuario_actual["nombre"]
+                    else:
+                        nombre = usuario_actual.nombre
+
+                    print(f"Bienvenido, {nombre}!")
+
                     print(f"Bienvenido, {usuario_actual['nombre']}!")
                 else:
                     print("Error en la autenticación. Verifica tus credenciales.")
             except Exception as e:
-                print(f"Error al autenticar: {e}")
-
+                ErrorLogger.log_error(str(e), module="main")
        
         elif usuario_actual and opcion == "1": 
             #TODO mostrar todos los libros
@@ -108,7 +114,6 @@ def main():
             isbn = input("Ingrese el ISBN del libro: ").strip()
             print(f"Buscando libro con ISBN {isbn}...")
             libro = api_libro.obtener_y_guardar_libro_por_isbn(isbn)
-            print(libro)
     
             if libro:
                 print("\n--- Detalles del Libro ---")
