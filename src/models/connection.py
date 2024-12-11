@@ -25,6 +25,7 @@ class Connection:
     def close(self):
         if self.connection and self.connection.open:
             self.connection.close()
+            
     def execute_query(self, query, params=None):
         if not self.connection or not self.connection.open:
             raise ConnectionError("No hay una conexión activa a la base de datos.")

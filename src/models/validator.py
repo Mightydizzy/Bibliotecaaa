@@ -12,6 +12,7 @@ class validator:
             raise ValueError("El email proporcionado debe ser una cadena no vacía.")
         if not re.match(email_regex, email):
             raise ValueError("El email no tiene un formato válido. Ejemplo válido: usuario@dominio.com.")
+        return True
         
     @staticmethod
     def validar_email_duplicado(email: str)-> bool:
@@ -40,5 +41,5 @@ class validator:
     def validar_cliente(client: Client)-> bool:
         validator.validar_email(client.email)
         validator.validar_email_duplicado(client.email)
-        validator.validar_password(client.password)
+        validator.validar_password(client.get_password())
         return True

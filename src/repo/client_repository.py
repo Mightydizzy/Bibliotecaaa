@@ -8,7 +8,7 @@ class ClientRepository:
     def registrar(self, client: Client):
         try:
             validator.validar_cliente(client)
-            password_hash = hash_password(client.password)
+            password_hash = hash_password(client.get_password())
             with Connection() as db:
                 sql = """
                     INSERT INTO usuarios (nombre, email, password_hash)
