@@ -11,6 +11,7 @@ class APIClient:
 
     def get(self, endpoint: str):
         url = f"{self.base_url}/{endpoint}"
+        print(url)
         try:
             response = requests.get(url)
             response.raise_for_status()

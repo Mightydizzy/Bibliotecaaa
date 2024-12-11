@@ -7,6 +7,7 @@ from src.services.prestamo_service import PrestamoService
 from src.services.db_libro import DBLibro
 from src.models.libro import Libro
 import getpass
+from src.services.error_log import ErrorLogger
 api_libro = APILibro()
 db_libro = DBLibro()
 
@@ -107,6 +108,7 @@ def main():
             isbn = input("Ingrese el ISBN del libro: ").strip()
             print(f"Buscando libro con ISBN {isbn}...")
             libro = api_libro.obtener_y_guardar_libro_por_isbn(isbn)
+            print(libro)
     
             if libro:
                 print("\n--- Detalles del Libro ---")

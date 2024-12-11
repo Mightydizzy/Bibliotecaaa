@@ -46,6 +46,7 @@ class DBLibro:
         with Connection() as db:
             cursor = db.execute_query(query, (isbn,))
             return cursor.fetchone()
+        
     @staticmethod
     def crear_libro(isbn, titulo, autor, descripcion, categorias, numero_paginas, disponibilidad):
         query = """

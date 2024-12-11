@@ -2,6 +2,7 @@ from src.models.libro import Libro
 from src.services.api_client import APIClient
 from src.services.db_libro import DBLibro
 from src.services.error_log import ErrorLogger 
+import requests
 class APILibro:
 
     def __init__(self):
@@ -46,21 +47,18 @@ class APILibro:
                     categorias=libro_db[4],
                     numero_paginas=libro_db[5],
                     disponibilidad=libro_db[6],
-            )
+                )
+            else:
+                # Si no está en la base de datos, busca en la API
+                libro_data = self.api_client.get(f"libros/{isbn}")
+                libro = Libro.from_dict(libro_data)
+
+                # Guarda el libro en la base de datos
+                self.db_repo.guardar_libro(libro)
+
+                return libro
         except Exception as e:
             ErrorLogger.log_error(str(e), module="Api libro")
-            print(f"Hubo un problema al consultar la base de datos: {e}")
-
-        # Si no está en la base de datos, busca en la API
-            libro_data = self.api_client.get(f"libros/{isbn}")
-            libro = Libro.from_dict(libro_data)
-
-        # Guarda el libro en la base de datos
-            self.db_repo.guardar_libro(libro)
-
-            return libro
-        except Exception as e:
-            ErrorLogger.log_error(str(e), module="Api libro")
-            print(f"Error al obtener libro por ISBN: {e}")
-        return None
+            print(f"Hubo un error al obtener el libro por ISBN: {e}")
+            return None
  
