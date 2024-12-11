@@ -36,9 +36,9 @@ def main():
                 print("\nOpciones:")
                 print("1. Visualizar todos los libros")
                 print("2. Buscar libros por ISBN")
-                print("3. Solicitar un préstamo")
+                print("3. Solicitar un préstamo de libro")
                 print("4. Consultar préstamo")
-                print("5. Devolver préstamo")
+                print("5. Devolver libro")
                 print("6. Agregar libro")
                 print("7. Editar libro")
                 print("8. Eliminar libro")
@@ -83,13 +83,13 @@ def main():
                     if usuario_actual:
                         print_separator()
                         print(r"""   *  .  . *       *    .        .        .   *    ..
-    .    *        .   ###     .      .        .            *
+    .    *        .    ###     .      .        .            *
         *.   *        #####   .     *      *        *    .
-    ____       *  ######### *    .  *      .        .  *   .
-    /   /\  .     ###\#|#/###   ..    *    .      *  .  ..  *
-    /___/  ^8/      ###\|/###  *    *            .      *   *
-    |   ||%%(        # )|(  #
-    |___|,  \\          )|(""")
+      ___       *   ######### *    .  *      .        .  *   .
+     /  /\  .      ###\#|#/###   ..    *    .      *  .  ..  *
+    /___/ \         ###\|/###  *    *            .      *   *
+    |   |||          # )|(  #
+    |___|,|            )|(""")
                         print_separator()
                         if isinstance(usuario_actual, dict):
                             nombre = usuario_actual["nombre"]
