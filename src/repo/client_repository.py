@@ -14,7 +14,7 @@ class ClientRepository:
                     INSERT INTO usuarios (nombre, email, password_hash)
                     VALUES (%s, %s, %s)
                 """
-                db.execute_query(sql, (client.nombre, client.email, password_hash))
+                db.execute_query(sql, (client.nombre(), client.email(), password_hash))
             
             print("Usuario registrado exitosamente.")
             return True

@@ -64,6 +64,7 @@ def main():
                     validator.validar_password(password)
 
                     cliente = Client(nombre=nombre, email=email, password=password)
+                    print(f"usuario: {nombre},correo {email}")
 
                     repo = ClientRepository()
                     repo.registrar(cliente)

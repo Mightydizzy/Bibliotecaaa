@@ -9,7 +9,7 @@ class validator:
     def validar_email(email: str):
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not isinstance(email, str) or not email:
-            raise ValueError("El email proporcionado debe ser una cadena no vacía.")
+            raise ValueError(" debe ser una cadena no vacía.")
         if not re.match(email_regex, email):
             raise ValueError("El email no tiene un formato válido. Ejemplo válido: usuario@dominio.com.")
         return True
@@ -39,7 +39,11 @@ class validator:
     
     @staticmethod
     def validar_cliente(client: Client)-> bool:
-        validator.validar_email(client.email)
-        validator.validar_email_duplicado(client.email)
-        validator.validar_password(client.get_password())
-        return True
+        try:
+            validator.validar_email(client.email())
+            validator.validar_email_duplicado(client.email())
+            validator.validar_password(client.get_password())
+            return True
+        except Exception as e:
+            raise ValueError(f"hubo un error: {e}")
+        

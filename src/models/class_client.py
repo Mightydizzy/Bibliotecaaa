@@ -10,9 +10,6 @@ class Client:
         
     def nombre(self):
         return self.__nombre
-    
-    def nombre(self, nuevo_nombre):
-        self.__nombre = nuevo_nombre
 
     def email(self):
         return self.__email
