@@ -13,7 +13,7 @@ db_libro = DBLibro()
 
 def print_separator():
     """Imprime una línea separadora para mejorar la legibilidad del menú."""
-    print("\n" + "-" * 50 + "\n")
+    print("\n" + "-" * 70 + "\n")
 
 def main():
     print("        ╭══• ೋ•✧๑-ˋˏ ༻✿༺ ˎˊ-๑✧•ೋ •══╮")
@@ -44,6 +44,7 @@ def main():
                 print("8. Eliminar libro")
                 print("9. Cerrar sesión")
                 print("10. Salir del sistema")
+            
             else:
                 print("\nOpciones:")
                 print("1. Registrar un nuevo usuario")
@@ -63,7 +64,6 @@ def main():
                     validator.validar_password(password)
 
                     cliente = Client(nombre=nombre, email=email, password=password)
-                    print(f"Cliente creado: Nombre={cliente.nombre}, Email={cliente.email}")
 
                     repo = ClientRepository()
                     repo.registrar(cliente)
@@ -105,19 +105,25 @@ def main():
                     ErrorLogger.log_error(str(e), module="main")
         
             elif usuario_actual and opcion == "1": 
-                #TODO mostrar todos los libros
+                print_separator()
                 print("\nMostrando todos los libros disponibles...")
+                print_separator()
                 libros = api_libro.obtener_libros_sin_repetir()
                 if libros:
                     for libro in libros:
                         print(f"ISBN: {libro['isbn']}, Título: {libro['titulo']}, Autor: {libro['autor']}")
+                        
+                    print_separator()    
                 else:
                     print("\nNo se encontraron libros disponibles.")
+                    print_separator()
             
             elif usuario_actual and opcion == "2":
+                print_separator()
                 isbn = input("Ingrese el ISBN del libro: ").strip()
                 print(f"Buscando libro con ISBN {isbn}...")
                 libro = api_libro.obtener_y_guardar_libro_por_isbn(isbn)
+                print_separator()
         
                 if libro:
                     print("\n--- Detalles del Libro ---")
@@ -129,21 +135,29 @@ def main():
                     print(f"Categorías: {libro.categorias}")
                     print(f"Número de Páginas: {libro.numero_paginas}")
                     print(f"Disponibilidad: {'Sí' if libro.disponibilidad else 'No'}")
+                    print_separator()
                 else:
+                    print_separator()
                     print("\nEl libro no fue encontrado en la API ni en la base de datos.")
+                    print_separator()
 
 
             elif usuario_actual and opcion == "3":
+                print_separator()
                 isbn = input("Ingrese el ISBN del libro que desea solicitar: ").strip()
                 PrestamoService.consultar_y_realizar_prestamo(usuario_actual, isbn)
+                print_separator()
 
             elif usuario_actual and opcion == "4":
+                print_separator()
                 PrestamoService.listar_prestamos_usuario(usuario_actual.id_cliente)
+                print_separator()
 
             elif usuario_actual and opcion == "5":
                 try:
                     prestamo_id = int(input("Ingrese el ID del préstamo que desea devolver: ").strip())
                     PrestamoService.devolver_prestamo(prestamo_id)
+                    print_separator()
                 except ValueError:
                     print("ID de préstamo inválido. Debe ser un número.")
 

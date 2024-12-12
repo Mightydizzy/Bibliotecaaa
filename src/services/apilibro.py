@@ -2,7 +2,7 @@ from src.models.libro import Libro
 from src.services.api_client import APIClient
 from src.services.db_libro import DBLibro
 from src.services.error_log import ErrorLogger 
-import requests
+
 class APILibro:
 
     def __init__(self):

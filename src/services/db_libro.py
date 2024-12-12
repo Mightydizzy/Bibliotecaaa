@@ -62,12 +62,6 @@ class DBLibro:
             ErrorLogger.log_error(str(e), module="Módulo crear libro")
             print(f"Error al crear el libro: {e}")
 
-    @staticmethod
-    def ver_libros():
-        query = "SELECT * FROM libros"
-        with Connection() as db:
-            cursor = db.execute_query(query)
-            return cursor.fetchall()
 
     @staticmethod
     def editar_libro(book_id, isbn=None, titulo=None, autor=None, descripcion=None, categorias=None, numero_paginas=None, disponibilidad=None):

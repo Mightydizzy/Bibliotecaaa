@@ -6,6 +6,7 @@ from src.services.error_log import ErrorLogger
 from src.models.prestamo import Prestamo
 
 class PrestamoService:
+    
     @classmethod
     def consultar_y_realizar_prestamo(self, cliente: Client, isbn: str):
         try:  
@@ -103,7 +104,7 @@ class PrestamoService:
 
         except Exception as e:
             ErrorLogger.log_error(str(e), module="Devolver Préstamo")
-            print(f"Error al devolver el préstamo: {e}")
+            print(f"Error al devolver el libro: {e}")
 
 
     @staticmethod
